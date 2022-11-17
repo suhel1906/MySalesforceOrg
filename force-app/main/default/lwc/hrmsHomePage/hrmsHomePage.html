@@ -1,0 +1,200 @@
+<template>
+  <lightning-layout>
+    <lightning-layout-item size="4">
+      <lightning-layout multiple-rows="true" class="slds-p-right_x-large">
+        <lightning-layout-item size="12">
+          <div
+            class="slds-p-around_x-small"
+            style="font-size: 20px; font-family: Segoe UI"
+          >
+            Quick Access
+          </div>
+          <div
+            class="slds-box"
+            style="background-color: #9785c2; font-size: 14px; color: white"
+          >
+            <div>Time Today - {currentDate}</div>
+            <div class="slds-grid">
+              <div class="slds-col slds-p-top_small">
+                <div style="color: white; font-size: 10px">CURRENT TIME</div>
+                <p style="color: white">
+                  <span style="font-size: 25px">{timeVal}</span
+                  ><span style="font-size: 12px">{seconds}</span>
+                </p>
+              </div>
+              <div class="slds-col slds-p-top_x-large">
+                <div class="slds-grid slds-float_right">
+                  <div class="slds-col slds-p-right_xx-small">
+                    <lightning-button label="Clock In"></lightning-button>
+                  </div>
+                  <div class="slds-col">
+                    <lightning-button-menu
+                      alternative-text="Attendence Regularization Options"
+                      style="background-color: white"
+                    >
+                      <lightning-menu-item
+                        label="Remote Clock In"
+                        value="RemoteClockIn"
+                      ></lightning-menu-item>
+                      <lightning-menu-item
+                        label="Work From Home"
+                        value="WorkFromHome"
+                      ></lightning-menu-item>
+                      <lightning-menu-item
+                        label="On Duty"
+                        value="On Duty"
+                      ></lightning-menu-item>
+                    </lightning-button-menu>
+                  </div>
+                </div>
+                <!--lightning-button-group>
+                    <lightning-button label="Clock In"></lightning-button>
+                    <lightning-button-menu alternative-text="Attendence Regularization Options">
+                      <lightning-menu-item label="Remote Clock In" value="RemoteClockIn"></lightning-menu-item>
+                      <lightning-menu-item label="Work From Home" value="WorkFromHome"></lightning-menu-item>
+                      <lightning-menu-item label="On Duty" value="On Duty"></lightning-menu-item>
+                  </lightning-button-menu>
+                  </lightning-button-group-->
+              </div>
+            </div>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item
+          size="12"
+          class="slds-m-top_x-large"
+          style="width: 100%"
+        >
+          <div class="slds-box">
+            <div>Inbox</div>
+            <div style="display: flex" class="slds-m-top_small">
+              <template if:true={isShowInbox}>
+                <p style="font-size: 36px; line-height: 40px">1</p>
+                <p style="margin-left: 10px; margin-right: 10px">
+                  Tasks waiting for your approval. Please click on take action
+                  for more details
+                </p>
+                <div>
+                  <button class="button-color">Take&nbsp;Action</button>
+                </div>
+              </template>
+              <template if:false={isShowInbox}>
+                <div style="font-family: Segoe; font-size: 20px">
+                  No Actions Pending
+                </div>
+              </template>
+            </div>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item
+          size="12"
+          class="slds-m-top_x-large"
+          style="width: 100%"
+        >
+          <div class="slds-box" style={holidayBgImg}>
+            <div>Holidays</div>
+            <div class="slds-p-top_small slds-grid" style="align-items: center">
+              <div class="slds-col slds-size_1-of-12">
+                <lightning-button-icon
+                  size="large"
+                  icon-name="utility:chevronleft"
+                  variant="bare-inverse"
+                  alternative-text="left"
+                  title="Left"
+                  onclick={changeHoliday}
+                  value="previousHoliday"
+                ></lightning-button-icon>
+              </div>
+              <div class="slds-col slds-p-left_x-small">
+                <p style="color: white; font-size: 30px; font-family: Segoe">
+                  {currentHoliday.Name}
+                </p>
+                <div style="color: white; font-size: 13px">
+                  {currentHolidayDate}
+                </div>
+              </div>
+              <div class="slds-size_1-of-12 slds-col">
+                <lightning-button-icon
+                  size="large"
+                  icon-name="utility:chevronright"
+                  variant="bare-inverse"
+                  alternative-text="right"
+                  title="Right"
+                  onclick={changeHoliday}
+                  value="nextHoliday"
+                ></lightning-button-icon>
+              </div>
+            </div>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item
+          size="12"
+          class="slds-m-top_x-large"
+          style="width: 100%"
+        >
+          <div class="slds-box">
+            <div>Working Remotely</div>
+            <div class="slds-m-top_small">
+              <lightning-avatar
+                variant="circle"
+                src="https://www.lightningdesignsystem.com/assets/images/avatar2.jpg"
+                initials="AW"
+                fallback-icon-name="standard:person_account"
+                alternative-text="Amy Weaver"
+                class="slds-m-right_small"
+              ></lightning-avatar>
+            </div>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item
+          size="12"
+          class="slds-m-top_x-large"
+          style="width: 100%"
+        >
+          <div class="slds-box">
+            <div>On Leave Today</div>
+            <div class="slds-m-top_small slds-grid" style="align-items: center">
+              <div class="slds-col" style="color: #777">
+                <div style="font-size: 14px">
+                  <b>Everyone working today!</b>
+                </div>
+                <div>No one is on leave today</div>
+              </div>
+              <div class="slds-col" style="text-align: right">
+                <img src={leaveIconUrl} />
+              </div>
+            </div>
+          </div>
+        </lightning-layout-item>
+        <lightning-layout-item
+          size="12"
+          class="slds-m-top_x-large"
+          style="width: 100%"
+        >
+          <div class="slds-box">
+            <div>Leave Balance</div>
+            <div class="slds-grid">
+              <div class="slds-col">
+                <!--canvas class="donut" lwc:dom="manual"></canvas-->
+                <div
+                  style="
+                    height: 25px;
+                    width: 25px;
+                    background-color: #bbb;
+                    border-radius: 50%;
+                    display: inline-block;
+                  "
+                >
+                  <div></div>
+                </div>
+              </div>
+              <div class="slds-col"></div>
+              <div class="slds-col"></div>
+            </div>
+          </div>
+        </lightning-layout-item>
+      </lightning-layout>
+    </lightning-layout-item>
+    <lightning-layout-item size="8" class="slds-p-right_x-large">
+    </lightning-layout-item>
+  </lightning-layout>
+</template>

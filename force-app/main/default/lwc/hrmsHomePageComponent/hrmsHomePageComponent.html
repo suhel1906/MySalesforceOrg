@@ -1,0 +1,148 @@
+<template>
+  <div style={divBackgroundImg}>
+    <lightning-layout>
+      <lightning-layout-item size="1">
+        <div class="slds-p-right_medium">
+          <div class="hrmsHeader slds-p-around_small">HRMS</div>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="3" class="slds-p-around_small">
+        <div style="font-size: 14px; color: white">
+          CLOUD ANALOGY CRM SPECIALIST LIMITED
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="4" class="slds-p-around_small">
+        <lightning-input variant="label-hidden"></lightning-input>
+      </lightning-layout-item>
+      <lightning-layout-item size="4">
+        <div
+          class="slds-grid slds-float_right"
+          style="padding: 10px 10px 0px 0px"
+        >
+          <div
+            class="slds-col"
+            style="font-size: 13px; color: white; padding-top: 5px"
+          >
+            Suhel Tiwari
+          </div>
+          <div class="slds-col" style="padding-top: 8px">
+            <lightning-button-menu
+              alternative-text="Profile Options"
+              variant="bare"
+            >
+              <lightning-menu-item
+                value="Profile"
+                label="Profile"
+              ></lightning-menu-item>
+              <lightning-menu-item
+                value="ChangePassword"
+                label="Change Password"
+              ></lightning-menu-item>
+              <lightning-menu-item
+                value="Logout"
+                label="Logout"
+              ></lightning-menu-item>
+            </lightning-button-menu>
+          </div>
+          <div class="slds-col">
+            <div class="circlediv">ST</div>
+          </div>
+        </div>
+      </lightning-layout-item>
+    </lightning-layout>
+  </div>
+  <lightning-layout vertical-align="stretch" multiple-rows="true">
+    <lightning-layout-item size="1" class="slds-p-right_medium">
+      <div style="background-color: #273143; height: 100%">
+        <div
+          class="slds-p-around_medium hrmsTab"
+          data-value="HomeTab"
+          onclick={onTabChange}
+        >
+          <lightning-icon
+            variant="inverse"
+            size="small"
+            icon-name="utility:home"
+            alternative-text="Home"
+          ></lightning-icon>
+          <div style="color: white">Home</div>
+        </div>
+        <div
+          class="slds-p-around_medium hrmsTab"
+          data-value="MeTab"
+          onclick={onTabChange}
+        >
+          <lightning-icon
+            variant="inverse"
+            size="small"
+            icon-name="utility:user"
+            alternative-text="Home"
+          ></lightning-icon>
+          <div style="color: white">Me</div>
+        </div>
+        <div
+          class="slds-p-around_medium hrmsTab"
+          data-value="InboxTab"
+          onclick={onTabChange}
+        >
+          <lightning-icon
+            variant="inverse"
+            size="small"
+            icon-name="utility:inbox"
+            alternative-text="Home"
+          ></lightning-icon>
+          <div style="color: white">Inbox</div>
+        </div>
+        <div
+          class="slds-p-around_medium hrmsTab"
+          data-value="MyTeamTab"
+          onclick={onTabChange}
+        >
+          <lightning-icon
+            variant="inverse"
+            size="small"
+            icon-name="utility:people"
+            alternative-text="Home"
+          ></lightning-icon>
+          <div style="color: white">My Team</div>
+        </div>
+        <div
+          class="slds-p-around_medium hrmsTab"
+          data-value="FinanceTab"
+          onclick={onTabChange}
+        >
+          <lightning-icon
+            variant="inverse"
+            size="small"
+            icon-name="utility:money"
+            alternative-text="Home"
+          ></lightning-icon>
+          <div style="color: white">My Finances</div>
+        </div>
+        <div
+          class="slds-p-around_medium hrmsTab"
+          data-value="OrgTab"
+          onclick={onTabChange}
+        >
+          <lightning-icon
+            variant="inverse"
+            size="small"
+            icon-name="utility:org_chart"
+            alternative-text="Home"
+          ></lightning-icon>
+          <div style="color: white">Org</div>
+        </div>
+      </div>
+    </lightning-layout-item>
+    <lightning-layout-item size="11">
+      <template if:true={showTabBool.homeTab}>
+        <div class="slds-p-around_small">
+          <c-hrms-home-page></c-hrms-home-page>
+        </div>
+      </template>
+      <template if:true={showTabBool.meTab}>
+        <c-hrms-me-tab-cmp></c-hrms-me-tab-cmp>
+      </template>
+    </lightning-layout-item>
+  </lightning-layout>
+</template>

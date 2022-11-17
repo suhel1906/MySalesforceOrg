@@ -1,0 +1,15 @@
+<apex:page >
+    <apex:includeLightning />    
+    <div id="LightningComponentid" />    
+    <script>
+    $Lightning.use("c:HRMSApp", function() {
+        $Lightning.createComponent("c:hrmsHomePageComponent",
+          { 
+          },
+          "LightningComponentid",
+          function(cmp) {
+             console.log('LWC Componenet added in VF page');
+          });
+    });
+    </script>
+</apex:page>

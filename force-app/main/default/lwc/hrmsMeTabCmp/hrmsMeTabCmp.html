@@ -1,0 +1,119 @@
+<template>
+  <lightning-tabset>
+    <lightning-tab label="Leave" title="Leave">
+      <lightning-tabset>
+        <lightning-tab label="Summary" title="Leave Summary">
+          <div style="background-color: rgb(243, 244, 247)">
+            <lightning-layout class="slds-p-around_small">
+              <lightning-layout-item size="2">
+                <p
+                  style="
+                    font-size: 18px;
+                    line-height: 28px;
+                    font-weight: 400;
+                    font-family: Segoe UI;
+                  "
+                >
+                  Pending leave requests
+                </p>
+              </lightning-layout-item>
+              <lightning-layout-item size="8"></lightning-layout-item>
+              <lightning-layout-item size="2" class="slds-p-right_small">
+                <lightning-combobox
+                  name="leaveStatsByYear"
+                  value={leaveStatVal}
+                  options={leaveStatOptions}
+                ></lightning-combobox>
+              </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout class="slds-p-around_small">
+              <!--Show Pending leaves-->
+              <lightning-layout-item size="9">
+                <div class="slds-box" style="background-color: white">
+                  <lightning-layout class="slds-p-top_small">
+                    <lightning-layout-item size="1">
+                      <div>
+                        <img src={elephantUrl} />
+                      </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="11">
+                      <div class="slds-p-around_small">
+                        <p style="font-size: 14px; font-family: Segoe UI">
+                          Nothing Here
+                        </p>
+                        <p
+                          style="
+                            font-size: 13px;
+                            font-family: Segoe UI;
+                            color: #777;
+                          "
+                        >
+                          Working hard yeah?? Request time off on the right ->
+                        </p>
+                      </div>
+                    </lightning-layout-item>
+                  </lightning-layout>
+                </div>
+              </lightning-layout-item>
+              <!--Apply Leaves-->
+              <lightning-layout-item
+                size="3"
+                class="slds-p-left_small slds-p-right_small"
+              >
+                <div class="slds-box" style="background-color: white">
+                  <p>
+                    <lightning-button
+                      label="Apply Leave"
+                      variant="brand"
+                    ></lightning-button>
+                  </p>
+                  <p>
+                    <!-- <lightning-button
+                      label="Request Credit for Compensatory Off"
+                      variant="base"
+                    ></lightning-button> -->
+                    <a href="javascript:void(0)"
+                      >Request Credit for Compensatory Off</a
+                    >
+                  </p>
+                  <p>
+                    <!-- <lightning-button
+                      label="Leave Policy Explanation"
+                      variant="base"
+                    ></lightning-button> -->
+                    <a href="javascript:void(0)">Leave Policy Explanation</a>
+                  </p>
+                </div>
+              </lightning-layout-item>
+            </lightning-layout>
+            <!--Leave Stats UI Starts-->
+            <div class="slds-p-around_small">
+              <p
+                style="
+                  font-size: 18px;
+                  line-height: 28px;
+                  font-weight: 400;
+                  font-family: Segoe UI;
+                "
+              >
+                My Leave Stats
+              </p>
+            </div>
+          </div>
+        </lightning-tab>
+      </lightning-tabset>
+    </lightning-tab>
+    <lightning-tab label="Attendance" title="Attendance">
+      Two Content !
+    </lightning-tab>
+    <lightning-tab label="Performance" title="Performance">
+      Three Content !
+    </lightning-tab>
+    <lightning-tab label="Expenses &amp; Travel">
+      Three Content !
+    </lightning-tab>
+    <lightning-tab label="HelpDesk" title="HelpDesk">
+      Three Content !
+    </lightning-tab>
+  </lightning-tabset>
+</template>
