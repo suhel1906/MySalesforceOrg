@@ -11,6 +11,11 @@
 		<name>ApexPage</name>
 	</types>
 	<types>
+		<members>HRMSApp</members>
+		<members>HRMSCmp</members>
+		<name>AuraDefinitionBundle</name>
+	</types>
+	<types>
 		<members>Employee_Attendence__c.Employee_Present_Date__c</members>
 		<members>Employee_Attendence__c.In_Time__c</members>
 		<members>Employee_Attendence__c.Out_Time__c</members>
