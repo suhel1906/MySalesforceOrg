@@ -1,9 +1,7 @@
 import { LightningElement, wire } from 'lwc';
 import getHolidays from '@salesforce/apex/HRMSHomePageController.getAllHolidays';
 import leaveIcon from '@salesforce/resourceUrl/OnLeavIcon';
-import chartjs from '@salesforce/resourceUrl/ChartJs';
-import { loadScript } from 'lightning/platformResourceLoader';
-import getAllAccountsByRating from '@salesforce/apex/HRMSHomePageController.getAllAccountsByRating';
+import attendenceActions from '@salesforce/apex/HRMSHomePageController.attendenceAction';
 
 export default class HrmsHomePage extends LightningElement {
   months = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
@@ -18,57 +16,6 @@ export default class HrmsHomePage extends LightningElement {
   currentHolidayIndex = 0;
   currentHolidayDate = '';
   holidayBgImg = '';
-  chart;
-  chartjsInitialized = false;
-  config = {
-    type: 'doughnut',
-    data: {
-      datasets: [
-        {
-          data: [10,20,30],
-          backgroundColor: [
-            'rgb(100,195,209)',
-            'rgb(202,234,242)',
-            'rgb(255,205,86)',
-            'rgb(75,192,192)',
-          ],
-          label: 'Dataset 1',
-          clip: {left: false, top: 2, right: -2, bottom: 0}
-        }
-      ],
-      labels: []
-    },
-    options: {
-      responsive: true,
-      legend: {
-        position: 'right'
-      },
-      animation: {
-        animateScale: true,
-        animateRotate: true
-      }
-    }
-  };
-  @wire(getAllAccountsByRating) accounts({ error, data }) {
-    if (data) {
-      for (var key in data) {
-        //this.updateChart(data[key].count, data[key].label);
-      }
-      this.error = undefined;
-    }
-    else if (error) {
-      this.error = error;
-      this.accounts = undefined;
-    }
-  }
-  updateChart(count, label) {
-
-    this.chart.data.labels.push(label);
-    this.chart.data.datasets.forEach((dataset) => {
-      dataset.data.push(count);
-    });
-    this.chart.update();
-  }
   start() {
     var parentThis = this;
     // Run timer code in every 100 milliseconds
@@ -92,11 +39,22 @@ export default class HrmsHomePage extends LightningElement {
     this.start();
     getHolidays().then(result => {
       if (result) {
-        this.allHolidayList = result;
-        this.holidayBgImg = "background-image: url(" + result[this.currentHolidayIndex].documents.VersionDataUrl + ");";
-        this.currentHoliday = result[0].holidays;
+        console.log("result>>" + JSON.stringify(result));
+        this.allHolidayList = result.holidays;
+        this.holidayBgImg = "background-image: url(" + result.holidays[this.currentHolidayIndex].documents.VersionDataUrl + ");";
+        this.currentHoliday = result.holidays[0].holidays;
         let date = new Date(this.currentHoliday.Holiday_Date__c);
         this.currentHolidayDate = date.toDateString();
+        if(result.attendenceData) {
+          if(result.attendenceData.In_Time__c && result.attendenceData.Out_Time__c) {
+            this.template.querySelector('[data-id="clockin"]').variant = "neutral";
+            this.template.querySelector('[data-id="clockin"]').label = "Clock In";
+          }
+          else {
+            this.template.querySelector('[data-id="clockin"]').variant = "destructive";
+            this.template.querySelector('[data-id="clockin"]').label = "Clock Out";
+          }
+        }
       }
     }).catch(error => {
       console.log(error);
@@ -124,20 +82,29 @@ export default class HrmsHomePage extends LightningElement {
       this.holidayBgImg = "background-image: url(" + this.allHolidayList[this.currentHolidayIndex].documents.VersionDataUrl + ");";
     }
   }
-  /*renderedCallback() {
-    if (this.chartjsInitialized) {
-      return;
+  handleAttendance(event) {
+    let inorOut = event.target.label;
+    if(event.target.label == 'Clock In') {
+      event.target.variant = 'destructive';
+      event.target.label = 'Clock Out';
+      event.target.disabled = true;
     }
-    this.chartjsInitialized = true;
-    Promise.all([
-      loadScript(this, chartjs)
-    ]).then(() => {
-      const ctx = this.template.querySelector('canvas.donut')
-        .getContext('2d');
-      this.chart = new window.Chart(ctx, this.config);
-    })
-      .catch(error => {
-        console.log("error in loading chart>>" + error);
+    else if(event.target.label == 'Clock Out') {
+      event.target.variant = 'neutral';
+      event.target.label = 'Clock In';
+    }
+    let date = new Date();
+    let target = event.target;
+    let currentDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
+    let currentDateTimeWrapp = {todayDate: currentDate, hours: new Date().getHours(), minutes: date.getMinutes(), seconds: date.getSeconds()};
+    attendenceActions({attendenceName: inorOut, currentDateTime: JSON.stringify(currentDateTimeWrapp)})
+      .then(result => {
+        if(result) {
+          console.log(JSON.stringify(result));
+          target.disabled = false;
+        }
+      }).catch(error => {
+        console.log(JSON.stringify(error));
       });
-  }*/
+  }
 }

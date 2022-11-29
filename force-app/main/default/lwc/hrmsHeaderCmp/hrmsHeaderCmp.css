@@ -1,0 +1,17 @@
+.circlediv {
+  width: 35px;
+    height:35px;
+    border-radius:50%;
+    color:#ffff;
+    line-height:35px;
+    text-align:center;
+    background: #64c3d1;
+}
+.hrmsHeader {
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  font-family: Segoe;
+  background-color: #1d5e90;
+  text-align: center;
+}

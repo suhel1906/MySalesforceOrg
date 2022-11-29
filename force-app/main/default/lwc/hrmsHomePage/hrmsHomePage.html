@@ -25,7 +25,7 @@
               <div class="slds-col slds-p-top_x-large">
                 <div class="slds-grid slds-float_right">
                   <div class="slds-col slds-p-right_xx-small">
-                    <lightning-button label="Clock In"></lightning-button>
+                    <lightning-button label="Clock In" data-id="clockin" name="ClockIn" onclick={handleAttendance}></lightning-button>
                   </div>
                   <div class="slds-col">
                     <lightning-button-menu
@@ -42,7 +42,7 @@
                       ></lightning-menu-item>
                       <lightning-menu-item
                         label="On Duty"
-                        value="On Duty"
+                        value="OnDuty"
                       ></lightning-menu-item>
                     </lightning-button-menu>
                   </div>

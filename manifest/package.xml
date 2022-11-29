@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
+		<members>EmployeeLeaveController</members>
+		<members>HRMSAttendenceController</members>
 		<members>HRMSHomePageController</members>
 		<name>ApexClass</name>
 	</types>
@@ -9,10 +11,73 @@
 		<name>ApexPage</name>
 	</types>
 	<types>
+		<members>Employee_Attendence__c.Employee_Present_Date__c</members>
+		<members>Employee_Attendence__c.In_Time__c</members>
+		<members>Employee_Attendence__c.Out_Time__c</members>
+		<members>Employee_Leave_Balance__c.Leave_Accured_So_Far__c</members>
+		<members>Employee_Leave_Balance__c.Leave_Annual_Quota__c</members>
+		<members>Employee_Leave_Balance__c.Leave_Available__c</members>
+		<members>Employee_Leave_Balance__c.Leave_Carryover__c</members>
+		<members>Employee_Leave_Balance__c.Leave_Consumed__c</members>
+		<members>Employee_Leave_Balance__c.Leave__c</members>
+		<members>Employee_Leave_Request__c.From_Day__c</members>
+		<members>Employee_Leave_Request__c.Leave_Full_Day_Or_Half_Day__c</members>
+		<members>Employee_Leave_Request__c.Leave_Type__c</members>
+		<members>Employee_Leave_Request__c.To_Date__c</members>
+		<members>Holiday__c.Holiday_Date__c</members>
+		<name>CustomField</name>
+	</types>
+	<types>
+		<members>Employee_Attendence__c</members>
+		<members>Employee_Leave_Balance__c</members>
+		<members>Employee_Leave_Request__c</members>
+		<members>Holiday__c</members>
+		<members>Leave__c</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>animation</members>
+		<members>arcConfiguration</members>
+		<members>baseAttribute</members>
+		<members>baseAxis</members>
+		<members>cartesianAxis</members>
+		<members>cartesianCategoryAxis</members>
+		<members>cartesianLinearAxis</members>
+		<members>cartesianLogarithmicAxis</members>
+		<members>cartesianTimeAxis</members>
+		<members>chart</members>
+		<members>chartBuilder</members>
+		<members>chartConfigService</members>
+		<members>constants</members>
+		<members>data</members>
+		<members>dataset</members>
+		<members>hrmsHeaderCmp</members>
 		<members>hrmsHomePage</members>
 		<members>hrmsHomePageComponent</members>
 		<members>hrmsMeTabCmp</members>
+		<members>hrmsMyAttendenceCmp</members>
+		<members>hrmsMyLeaveCmp</members>
+		<members>layout</members>
+		<members>legend</members>
+		<members>lineConfiguration</members>
+		<members>nanoid</members>
+		<members>pointConfiguration</members>
+		<members>radialAxis</members>
+		<members>radialLinearAxis</members>
+		<members>reactivityManager</members>
+		<members>rectangleConfiguration</members>
+		<members>title</members>
+		<members>tooltip</members>
+		<members>utils</members>
 		<name>LightningComponentBundle</name>
+	</types>
+	<types>
+		<members>ChartJs</members>
+		<members>ElephantImg</members>
+		<members>OnLeavIcon</members>
+		<members>Resources</members>
+		<members>chartjs_v280</members>
+		<name>StaticResource</name>
 	</types>
 	<version>55.0</version>
 </Package>

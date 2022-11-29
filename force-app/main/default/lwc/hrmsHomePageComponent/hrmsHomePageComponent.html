@@ -1,55 +1,6 @@
 <template>
-  <div style={divBackgroundImg}>
-    <lightning-layout>
-      <lightning-layout-item size="1">
-        <div class="slds-p-right_medium">
-          <div class="hrmsHeader slds-p-around_small">HRMS</div>
-        </div>
-      </lightning-layout-item>
-      <lightning-layout-item size="3" class="slds-p-around_small">
-        <div style="font-size: 14px; color: white">
-          CLOUD ANALOGY CRM SPECIALIST LIMITED
-        </div>
-      </lightning-layout-item>
-      <lightning-layout-item size="4" class="slds-p-around_small">
-        <lightning-input variant="label-hidden"></lightning-input>
-      </lightning-layout-item>
-      <lightning-layout-item size="4">
-        <div
-          class="slds-grid slds-float_right"
-          style="padding: 10px 10px 0px 0px"
-        >
-          <div
-            class="slds-col"
-            style="font-size: 13px; color: white; padding-top: 5px"
-          >
-            Suhel Tiwari
-          </div>
-          <div class="slds-col" style="padding-top: 8px">
-            <lightning-button-menu
-              alternative-text="Profile Options"
-              variant="bare"
-            >
-              <lightning-menu-item
-                value="Profile"
-                label="Profile"
-              ></lightning-menu-item>
-              <lightning-menu-item
-                value="ChangePassword"
-                label="Change Password"
-              ></lightning-menu-item>
-              <lightning-menu-item
-                value="Logout"
-                label="Logout"
-              ></lightning-menu-item>
-            </lightning-button-menu>
-          </div>
-          <div class="slds-col">
-            <div class="circlediv">ST</div>
-          </div>
-        </div>
-      </lightning-layout-item>
-    </lightning-layout>
+  <div>
+    <c-hrms-header-cmp></c-hrms-header-cmp>
   </div>
   <lightning-layout vertical-align="stretch" multiple-rows="true">
     <lightning-layout-item size="1" class="slds-p-right_medium">

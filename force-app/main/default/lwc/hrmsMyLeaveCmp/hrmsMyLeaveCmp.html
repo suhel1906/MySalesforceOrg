@@ -1,0 +1,221 @@
+<template>
+  <div style="background-color: rgb(243, 244, 247)">
+    <lightning-layout class="slds-p-around_small">
+      <lightning-layout-item size="2">
+        <p style="
+            font-size: 18px;
+            line-height: 28px;
+            font-weight: 400;
+            font-family: Segoe UI;
+          ">
+          Pending leave requests
+        </p>
+      </lightning-layout-item>
+      <lightning-layout-item size="8"></lightning-layout-item>
+      <lightning-layout-item size="2" class="slds-p-right_small">
+        <lightning-combobox name="leaveStatsByYear" value={leaveStatVal} options={leaveStatOptions}>
+        </lightning-combobox>
+      </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout class="slds-p-around_small">
+      <!--Show Pending leaves-->
+      <lightning-layout-item size="9">
+        <div class="slds-box" style="background-color: white">
+          <lightning-layout class="slds-p-top_small">
+            <lightning-layout-item size="1">
+              <div>
+                <img src={elephantUrl} />
+              </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="11">
+              <div class="slds-p-around_small">
+                <p style="font-size: 14px; font-family: Segoe UI">
+                  Nothing Here
+                </p>
+                <p style="
+                    font-size: 13px;
+                    font-family: Segoe UI;
+                    color: #777;
+                  ">
+                  Working hard yeah?? Request time off on the right ->
+                </p>
+              </div>
+            </lightning-layout-item>
+          </lightning-layout>
+        </div>
+      </lightning-layout-item>
+      <!--Apply Leaves-->
+      <lightning-layout-item size="3" class="slds-p-left_small slds-p-right_small">
+        <div class="slds-box" style="background-color: white">
+          <p>
+            <lightning-button label="Apply Leave" variant="brand"></lightning-button>
+          </p>
+          <p>
+            <!-- <lightning-button
+              label="Request Credit for Compensatory Off"
+              variant="base"
+            ></lightning-button> -->
+            <a href="javascript:void(0)">Request Credit for Compensatory Off</a>
+          </p>
+          <p>
+            <!-- <lightning-button
+              label="Leave Policy Explanation"
+              variant="base"
+            ></lightning-button> -->
+            <a href="javascript:void(0)">Leave Policy Explanation</a>
+          </p>
+        </div>
+      </lightning-layout-item>
+    </lightning-layout>
+    <!--Leave Stats UI Starts-->
+    <div class="slds-p-around_small">
+      <p style="
+          font-size: 18px;
+          line-height: 28px;
+          font-weight: 400;
+          font-family: Segoe UI;
+        ">
+        My Leave Stats
+      </p>
+    </div>
+    <lightning-layout>
+      <lightning-layout-item size="3" class="slds-p-around_small">
+        <div class="slds-box" style="background-color: white;">
+          <c-chart type="bar" responsive="true" stylecss="position: relative; margin: auto;" events='["click"]'>
+            <c-dataset labels='["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]'>
+              <c-data detail="[12, 19, 7, 9, 5, 15]" backgroundcolor='[
+            "rgba(82, 183, 216, 0.2)",
+            "rgba(225, 96, 50, 0.2)",
+            "rgba(255, 176, 59, 0.2)",
+            "rgba(84, 167, 123, 0.2)",
+            "rgba(79, 210, 210, 0.2)",
+            "rgba(226, 135, 178, 0.2)"
+            ]' bordercolor='[
+            "rgba(82, 183, 216, 1)",
+            "rgba(225, 96, 50, 1)",
+            "rgba(255, 176, 59, 1)",
+            "rgba(84, 167, 123, 1)",
+            "rgba(79, 210, 210, 1)",
+            "rgba(226, 135, 178, 1)"
+            ]' borderwidth="1"></c-data>
+            </c-dataset>
+            <c-title text="Weekly Pattern"></c-title>
+            <!-- <c-title text="Bar Chart"></c-title>
+            <c-legend position="right"></c-legend> -->
+            <c-tooltip position="nearest" mode="index" enabled="true"></c-tooltip>
+            <c-animation duration="2000" easing="easeInBounce"> </c-animation>
+            <c-cartesian-category-axis axis="x" position="bottom"></c-cartesian-category-axis>
+          </c-chart>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="3" class="slds-p-around_small">
+        <div class="slds-box" style="background-color: white;">
+          <c-chart type="doughnut" responsive="true">
+            <c-dataset labels='["OK", "WARNING", "CRITICAL", "UNKNOWN"]'>
+              <c-data label="# of Tomatoes" detail="[12, 19, 3, 5]" backgroundcolor='[
+            "rgba(14, 110, 206, 1)",
+            "rgba(45, 156, 237, 1)",
+            "rgba(104, 206, 238, 1)",
+            "rgba(150, 242, 238, 1)"
+            ]'></c-data>
+            </c-dataset>
+            <c-title text="Consumed Leave Types"></c-title>
+            <!-- c-legend position="left"></c-legend> -->
+            <c-arc-configuration bordercolor="rgba(7, 62, 146, 0.7)"></c-arc-configuration>
+          </c-chart>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="6" class="slds-p-around_small">
+        <div class="slds-box" style="background-color: white;">
+          <c-chart type="bar" responsive="true" maintainaspectratio="false" stylecss="position: relative; margin: auto;" events='["click"]'>
+            <c-dataset labels='["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]'>
+              <c-data detail="[12, 19, 7, 9, 5, 15, 2, 3, 5, 7, 8, 10]" backgroundcolor='[
+            "rgba(82, 183, 216, 0.2)",
+            "rgba(225, 96, 50, 0.2)",
+            "rgba(255, 176, 59, 0.2)",
+            "rgba(84, 167, 123, 0.2)",
+            "rgba(79, 210, 210, 0.2)",
+            "rgba(226, 135, 178, 0.2)",
+            "rgba(226, 135, 178, 0.2)",
+            "rgba(79, 210, 210, 0.2)",
+            "rgba(255, 176, 59, 0.2)",
+            "rgba(225, 96, 50, 0.2)",
+            "rgba(82, 183, 216, 0.2)",
+            "rgba(226, 135, 178, 0.2)"
+            ]' bordercolor='[
+            "rgba(82, 183, 216, 0.2)",
+            "rgba(225, 96, 50, 0.2)",
+            "rgba(255, 176, 59, 0.2)",
+            "rgba(84, 167, 123, 0.2)",
+            "rgba(79, 210, 210, 0.2)",
+            "rgba(226, 135, 178, 0.2)",
+            "rgba(226, 135, 178, 0.2)",
+            "rgba(79, 210, 210, 0.2)",
+            "rgba(255, 176, 59, 0.2)",
+            "rgba(225, 96, 50, 0.2)",
+            "rgba(82, 183, 216, 0.2)",
+            "rgba(226, 135, 178, 0.2)"
+            ]' borderwidth="1"></c-data>
+            </c-dataset>
+            <c-title text="Monthly Stats"></c-title>
+            <!--c-legend position="right"></c-legend--> 
+            <!-- <c-tooltip position="nearest" mode="index" enabled="true"></c-tooltip> -->
+            <c-animation duration="2000" easing="easeInBounce"> </c-animation>
+            <c-cartesian-category-axis axis="x" position="bottom"></c-cartesian-category-axis>
+          </c-chart>
+        </div>
+      </lightning-layout-item>
+    </lightning-layout>
+    <div class="slds-p-around_small">
+      <p style="font-size: 18px;line-height: 28px;font-weight: 400;font-family: Segoe UI;">
+        Leave Balances
+      </p>
+    </div>
+    <lightning-layout multiple-rows="true">
+      <template for:each={chartData} for:item="chartdata">
+        <lightning-layout-item size="4" key={chartdata.leaveBalanceData.Id} class="slds-p-around_small">
+          <div style="background-color: white;" class="slds-border_right slds-border_left slds-border_top slds-border_bottom">
+            <div class="slds-m-bottom_small slds-box" style="border: none;">
+              <c-chart type="doughnut" responsive="true">
+                <c-dataset labels='["Available", "Consumed"]'>
+                  <c-data label={chartdata.leaveBalanceData.Leave__r.Name} detail={chartdata.data} backgroundcolor={chartdata.borderColor}></c-data>
+                </c-dataset>
+                <c-title text={chartdata.leaveBalanceData.Leave__r.Name}></c-title>
+              </c-chart>
+            </div>
+            <div class="slds-border_top">
+              <div class="slds-grid">
+                <div class="slds-col slds-border_right slds-p-around_x-small">
+                  <p style="color: #777;">Available</p>
+                  <p>{chartdata.leaveBalanceData.Leave_Available__c}</p>
+                </div>
+                <div class="slds-col slds-p-around_x-small">
+                  <p style="color: #777;">Consumed</p>
+                  <p>{chartdata.leaveBalanceData.Leave_Consumed__c}</p>
+                </div>
+              </div>
+              <div class="slds-grid slds-border_top">
+                <template if:true={chartdata.leaveBalanceData.Leave_Accured_So_Far__c}>
+                  <div class="slds-col slds-border_right slds-p-around_x-small">
+                    <p style="color: #777;">Accured So Far</p>
+                    <p>{chartdata.leaveBalanceData.Leave_Accured_So_Far__c}</p>
+                  </div>
+                </template>
+                <template if:true={chartdata.leaveBalanceData.Leave_Carryover__c}>
+                  <div class="slds-col slds-border_right slds-p-around_x-small">
+                    <p style="color: #777;">CarryOver</p>
+                    <p>{chartdata.leaveBalanceData.Leave_Carryover__c}</p>
+                  </div>
+                </template>
+                <div class="slds-col slds-p-around_x-small">
+                  <p style="color: #777;">Annual Quota</p>
+                  <p>{chartdata.leaveBalanceData.Leave_Annual_Quota__c}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </lightning-layout-item>
+      </template>
+    </lightning-layout>
+  </div>
+</template>
