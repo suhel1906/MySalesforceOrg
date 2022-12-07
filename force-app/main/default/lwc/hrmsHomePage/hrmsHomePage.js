@@ -33,13 +33,11 @@ export default class HrmsHomePage extends LightningElement {
   }
   connectedCallback() {
     this.leaveIconUrl = leaveIcon;
-    console.log("iconurl>>" + this.leaveIconUrl);
     var dateObj = new Date();
     this.currentDate = this.months[dateObj.getMonth()] + " " + dateObj.getDate() + ", " + dateObj.getFullYear() + " " + this.days[dateObj.getDay()];
     this.start();
     getHolidays().then(result => {
       if (result) {
-        console.log("result>>" + JSON.stringify(result));
         this.allHolidayList = result.holidays;
         this.holidayBgImg = "background-image: url(" + result.holidays[this.currentHolidayIndex].documents.VersionDataUrl + ");";
         this.currentHoliday = result.holidays[0].holidays;
@@ -100,7 +98,6 @@ export default class HrmsHomePage extends LightningElement {
     attendenceActions({attendenceName: inorOut, currentDateTime: JSON.stringify(currentDateTimeWrapp)})
       .then(result => {
         if(result) {
-          console.log(JSON.stringify(result));
           target.disabled = false;
         }
       }).catch(error => {

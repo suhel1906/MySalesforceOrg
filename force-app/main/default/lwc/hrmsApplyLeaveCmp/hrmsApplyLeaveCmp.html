@@ -1,0 +1,165 @@
+<template>
+  <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+    class="slds-modal slds-fade-in-open slds-modal_small">
+    <div class="slds-modal__container">
+      <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={hideModalBox}>
+        <lightning-icon icon-name="utility:close" size="small" variant="inverse"></lightning-icon>
+        <span class="slds-assistive-text">Cancel and close</span>
+      </button>
+      <div class="slds-modal__header" style="background-color: #4a5363;color:white;">
+        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Leave Request For Suhel Tiwari</h1>
+      </div>
+      <div class="slds-modal__content">
+        <lightning-layout>
+          <lightning-layout-item size="7">
+            <div class="slds-p-around_medium" style="background-color: white;">
+              <div class="slds-grid" style="align-items: baseline;">
+                <div class="slds-col">
+                  <lightning-input type="date" name="fromdate" label="From Date" onchange={handleInputChange}></lightning-input>
+                </div>
+                <div class="slds-col" style="background-color: #F3F4F7;">
+                  <div class="slds-box slds-box_x-small">1 days</div>
+                </div>
+                <div class="slds-col">
+                  <lightning-input type="date" name="todate" label="To Date" onchange={handleInputChange}></lightning-input>
+                </div>
+              </div>
+              <template if:true={isShowFirstHalfSecondHalf.fullDayFirstHalfSecondHalf}>
+                <div class="slds-p-top_medium">
+                  <lightning-button-group>
+                    <lightning-button class="btngrp" name="oneDayFullDay" label="Full Day" variant="brand" onclick={handleButtonClick}></lightning-button>
+                    <lightning-button class="btngrp" name="oneDayFirstHalf" variant="neutral" label="First Half" onclick={handleButtonClick}></lightning-button>
+                    <lightning-button class="btngrp" name="oneDaySecondHalf" variant="neutral" label="Second Half" onclick={handleButtonClick}></lightning-button>
+                  </lightning-button-group>
+                </div>
+                <div class="slds-box slds-box_x-small slds-m-top_small" style="background-color: rgba(49,160,246,.2);border-color: rgba(49,160,246,.25);">
+                  <p style="color: #2a5278;">Leave request is for {leaveRequestData.Number_Of_Leave_Days__c} days</p>
+                </div>
+              </template>
+              <template if:true={isShowFirstHalfSecondHalf.firstHalfToSecondhalf}>
+                <div class="slds-grid slds-p-top_medium" style="align-items: center;">
+                  <div class="slds-col">
+                    <lightning-button-group>
+                      <lightning-button class="btngrp" name="firstDayFirstHalf" label="First Half" variant="brand" onclick={handleButtonClick}></lightning-button>
+                      <lightning-button class="btngrp" name="firstDaySecondHalf" label="Second Half" variant="neutral" onclick={handleButtonClick}></lightning-button>
+                    </lightning-button-group>
+                  </div>
+                  <div class="slds-col">
+                    <p>To</p>
+                  </div>
+                  <div class="slds-col" style="text-align: right;">
+                    <lightning-button-group>
+                      <lightning-button class="btn1grp1" name="secondDayFirstHalf" label="First Half" variant="neutral" onclick={handleButtonClick}></lightning-button>
+                      <lightning-button class="btn1grp1" name="secondDaySecondHalf" label="Second Half" variant="brand" onclick={handleButtonClick}></lightning-button>
+                    </lightning-button-group>
+                  </div>
+                </div>
+                <div class="slds-box slds-box_x-small slds-m-top_small" style="background-color: rgba(49,160,246,.2);border-color: rgba(49,160,246,.25);">
+                  <p style="color: #2a5278;">Leave request is for {leaveRequestData.Number_Of_Leave_Days__c} days</p>
+                </div>
+              </template>
+              <div class="slds-p-top_medium">
+                <lightning-combobox label="Select available leave types" data-id="leaveTypes" options={leaveTypeOptions}
+                  value={leaveRequestData.leaveType} placeholder="Select Leave Type" onchange={handleLeaveTypeChange}></lightning-combobox>
+              </div>
+              <div class="slds-p-top_medium">
+                <lightning-textarea name="leaveNotes" label="Notes"
+                  placeholder="Please Enter reason For Applying Leave" value={leaveRequestData.leaveReason} onchange={handleInputChange}>
+                </lightning-textarea>
+              </div>
+              <div class="slds-p-top_medium">
+                <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="combobox-id-1" id="combobox-label-id-33">Notify</label>
+                  <lightning-pill-container items={selectedUserList} onitemremove={handleItemRemove}></lightning-pill-container>
+                  <div class="slds-form-element__control">
+                    <div class="slds-combobox_container">
+                      <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
+                        data-id="userlistsection">
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                          role="none">
+                          <input type="text" class="search-input" aria-autocomplete="list"
+                            aria-controls="listbox-id-1" aria-expanded="false" aria-haspopup="listbox"
+                            auto-complete="off" role="combobox" placeholder="Search..." onkeyup={handleNotifiedUsers} />
+                          <p style="color: #afafaf;">Note: These employees will be notified through email when your
+                            leave request is approved.</p>
+                        </div>
+                        <div class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                          <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                            <template for:each={searcheduserData} for:item="data">
+                              <li role="presentation" data-item={data.Id} class="slds-listbox__item" key={data.Id} onclick={handleNotifyUser}>
+                                <div
+                                  class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+                                  role="option">
+                                  <lightning-avatar variant="square" size="large" src={data.SmallPhotoUrl} initials="AW" fallback-icon-name="standard:person_account" alternative-text={data.Name} class="slds-m-right_small"></lightning-avatar>
+                                  <span class="slds-media__body">
+                                    <span
+                                      class="slds-listbox__option-text slds-listbox__option-text_entity">{data.Name}</span>
+                                    <span
+                                      class="slds-listbox__option-meta slds-listbox__option-meta_entity">Professional
+                                      Services</span>
+                                    <span
+                                      class="slds-listbox__option-meta slds-listbox__option-meta_entity">CA-IND-0094</span>
+                                  </span>
+                                </div>
+                              </li>
+                            </template>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </lightning-layout-item>
+          <lightning-layout-item size="5">
+            <div class="slds-p-around_medium" style="background-color: #F8F8F9;">
+              <p style="font-size: 20px;font-weight:300" class="slds-m-bottom_small">Team Leave Calendar</p>
+              <div class="slds-box slds-grid slds-box_small" style="background-color: #2986CE;align-items: center;">
+                <div class="slds-col" style="text-align: right;">
+                  <lightning-button-icon name="previousMonth" icon-name="utility:chevronleft" variant="bare-inverse" size="small" onclick={handleCalendarChange}>
+                  </lightning-button-icon>
+                </div>
+                <div class="slds-col" style="text-align: center;color:white;">
+                  {calendarMonthYear.currentMonthName} &nbsp; {calendarMonthYear.currentYear}
+                </div>
+                <div class="slds-col">
+                  <lightning-button-icon name="nextMonth" icon-name="utility:chevronright" variant="bare-inverse" size="small" onclick={handleCalendarChange}>
+                  </lightning-button-icon>
+                </div>
+              </div>
+              <table class="slds-table">
+                <thead>
+                  <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <template for:each={currentMonthDate} for:item="item">
+                    <tr key={item}>
+                      <template for:each={item.dates} for:item="data">
+                        <td key={data} style={data.textColor}>{data.day}</td>
+                      </template>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+          </lightning-layout-item>
+        </lightning-layout>
+      </div>
+      <div class="slds-modal__footer">
+        <button class="slds-button slds-button_neutral" aria-label="Cancel and close"
+          onclick={hideModalBox}>Cancel</button>
+        <button class="slds-button slds-button_brand" onclick={raiseLeaveRequest}>Request Leave</button>
+      </div>
+    </div>
+  </section>
+  <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>

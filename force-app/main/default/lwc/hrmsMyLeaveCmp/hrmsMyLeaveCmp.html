@@ -1,4 +1,7 @@
 <template>
+  <template if:true={isShowApplyleave}>
+    <c-hrms-apply-leave-cmp onmodalclose={closeApplyLeaveModal}></c-hrms-apply-leave-cmp>
+  </template>
   <div style="background-color: rgb(243, 244, 247)">
     <lightning-layout class="slds-p-around_small">
       <lightning-layout-item size="2">
@@ -48,7 +51,7 @@
       <lightning-layout-item size="3" class="slds-p-left_small slds-p-right_small">
         <div class="slds-box" style="background-color: white">
           <p>
-            <lightning-button label="Apply Leave" variant="brand"></lightning-button>
+            <lightning-button label="Apply Leave" variant="brand" onclick={showApplyLeaveModal}></lightning-button>
           </p>
           <p>
             <!-- <lightning-button
@@ -127,7 +130,8 @@
       </lightning-layout-item>
       <lightning-layout-item size="6" class="slds-p-around_small">
         <div class="slds-box" style="background-color: white;">
-          <c-chart type="bar" responsive="true" maintainaspectratio="false" stylecss="position: relative; margin: auto;" events='["click"]'>
+          <c-chart type="bar" responsive="true" maintainaspectratio="false" stylecss="position: relative; margin: auto;"
+            events='["click"]'>
             <c-dataset labels='["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]'>
               <c-data detail="[12, 19, 7, 9, 5, 15, 2, 3, 5, 7, 8, 10]" backgroundcolor='[
             "rgba(82, 183, 216, 0.2)",
@@ -158,7 +162,7 @@
             ]' borderwidth="1"></c-data>
             </c-dataset>
             <c-title text="Monthly Stats"></c-title>
-            <!--c-legend position="right"></c-legend--> 
+            <!--c-legend position="right"></c-legend-->
             <!-- <c-tooltip position="nearest" mode="index" enabled="true"></c-tooltip> -->
             <c-animation duration="2000" easing="easeInBounce"> </c-animation>
             <c-cartesian-category-axis axis="x" position="bottom"></c-cartesian-category-axis>
@@ -171,51 +175,98 @@
         Leave Balances
       </p>
     </div>
-    <lightning-layout multiple-rows="true">
-      <template for:each={chartData} for:item="chartdata">
-        <lightning-layout-item size="4" key={chartdata.leaveBalanceData.Id} class="slds-p-around_small">
-          <div style="background-color: white;" class="slds-border_right slds-border_left slds-border_top slds-border_bottom">
-            <div class="slds-m-bottom_small slds-box" style="border: none;">
-              <c-chart type="doughnut" responsive="true">
-                <c-dataset labels='["Available", "Consumed"]'>
-                  <c-data label={chartdata.leaveBalanceData.Leave__r.Name} detail={chartdata.data} backgroundcolor={chartdata.borderColor}></c-data>
-                </c-dataset>
-                <c-title text={chartdata.leaveBalanceData.Leave__r.Name}></c-title>
-              </c-chart>
-            </div>
-            <div class="slds-border_top">
-              <div class="slds-grid">
-                <div class="slds-col slds-border_right slds-p-around_x-small">
-                  <p style="color: #777;">Available</p>
-                  <p>{chartdata.leaveBalanceData.Leave_Available__c}</p>
+    <lightning-layout multiple-rows="true" vertical-align="stretch">
+      <template for:each={chartData} for:item="item">
+        <lightning-layout-item size="4" key={item.leaveBalanceData.Id} class="slds-p-around_small">
+          <div style="background-color: white;height:100%;"
+            class="slds-border_right slds-border_left slds-border_top slds-border_bottom">
+            <lightning-layout class="slds-grid_vertical" multiple-rows="true" style="height: 100%;">
+              <lightning-layout-item size="12" alignment-bump="bottom">
+                <div class="slds-m-bottom_small slds-box" style="border: none;">
+                  <template if:true={item.isShowChart}>
+                    <c-chart type="doughnut" responsive="true">
+                      <c-dataset labels='["Available", "Consumed"]'>
+                        <c-data label={item.leaveBalanceData.Leave__r.Name} detail={item.data}
+                          backgroundcolor={item.borderColor}></c-data>
+                      </c-dataset>
+                      <c-title text={item.leaveBalanceData.Leave__r.Name}></c-title>
+                    </c-chart>
+                  </template>
+                  <template if:false={item.isShowChart}>
+                    <p>No Data To Display</p>
+                  </template>
                 </div>
-                <div class="slds-col slds-p-around_x-small">
-                  <p style="color: #777;">Consumed</p>
-                  <p>{chartdata.leaveBalanceData.Leave_Consumed__c}</p>
-                </div>
-              </div>
-              <div class="slds-grid slds-border_top">
-                <template if:true={chartdata.leaveBalanceData.Leave_Accured_So_Far__c}>
-                  <div class="slds-col slds-border_right slds-p-around_x-small">
-                    <p style="color: #777;">Accured So Far</p>
-                    <p>{chartdata.leaveBalanceData.Leave_Accured_So_Far__c}</p>
+              </lightning-layout-item>
+              <lightning-layout-item size="12">
+                <div class="slds-border_top">
+                  <div class="slds-grid">
+                    <div class="slds-col slds-border_right slds-p-around_x-small">
+                      <p style="color: #777;">Available</p>
+                      <p>{item.leaveBalanceData.Leave_Available__c}</p>
+                    </div>
+                    <div class="slds-col slds-p-around_x-small">
+                      <p style="color: #777;">Consumed</p>
+                      <p>{item.leaveBalanceData.Leave_Consumed__c}</p>
+                    </div>
                   </div>
-                </template>
-                <template if:true={chartdata.leaveBalanceData.Leave_Carryover__c}>
-                  <div class="slds-col slds-border_right slds-p-around_x-small">
-                    <p style="color: #777;">CarryOver</p>
-                    <p>{chartdata.leaveBalanceData.Leave_Carryover__c}</p>
+                  <div class="slds-grid slds-border_top">
+                    <template if:true={item.leaveBalanceData.Leave_Accured_So_Far__c}>
+                      <div class="slds-col slds-border_right slds-p-around_x-small">
+                        <p style="color: #777;">Accured So Far</p>
+                        <p>{item.leaveBalanceData.Leave_Accured_So_Far__c}</p>
+                      </div>
+                    </template>
+                    <template if:true={item.leaveBalanceData.Leave_Carryover__c}>
+                      <div class="slds-col slds-border_right slds-p-around_x-small">
+                        <p style="color: #777;">CarryOver</p>
+                        <p>{item.leaveBalanceData.Leave_Carryover__c}</p>
+                      </div>
+                    </template>
+                    <div class="slds-col slds-p-around_x-small">
+                      <p style="color: #777;">Annual Quota</p>
+                      <p>{item.leaveBalanceData.Leave_Annual_Quota__c}</p>
+                    </div>
                   </div>
-                </template>
-                <div class="slds-col slds-p-around_x-small">
-                  <p style="color: #777;">Annual Quota</p>
-                  <p>{chartdata.leaveBalanceData.Leave_Annual_Quota__c}</p>
                 </div>
-              </div>
-            </div>
+              </lightning-layout-item>
+            </lightning-layout>
           </div>
         </lightning-layout-item>
       </template>
     </lightning-layout>
+    <div class="slds-p-around_small">
+      <p style="font-size: 18px;line-height: 28px;font-weight: 400;font-family: Segoe UI;">
+        Leave History
+      </p>
+    </div>
+    <div class="slds-p-around_small">
+      <table class="slds-table slds-table_bordered slds-border_left slds-border_right" aria-labelledby="element-with-table-label other-element-with-table-label">
+        <tbody>
+          <tr class="slds-line-height_reset" style="background-color: rgb(243, 244, 247);">
+            <th class="" scope="col">
+              <div class="slds-truncate" title="LEAVE DATE">LEAVE DATE</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="LEAVE TYPE">LEAVE TYPE</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="STATUS">STATUS</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="REQUESTED BY">REQUESTED BY</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="ACTION TAKEN ON">ACTION TAKEN ON</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="LEAVE NOTE">LEAVE NOTE</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="ACTIONS">ACTIONS</div>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>

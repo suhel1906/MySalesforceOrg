@@ -25,9 +25,13 @@
 		<members>Employee_Leave_Balance__c.Leave_Carryover__c</members>
 		<members>Employee_Leave_Balance__c.Leave_Consumed__c</members>
 		<members>Employee_Leave_Balance__c.Leave__c</members>
-		<members>Employee_Leave_Request__c.From_Day__c</members>
+		<members>Employee_Leave_Request__c.First_Day_Second_Half__c</members>
+		<members>Employee_Leave_Request__c.From_Date__c</members>
+		<members>Employee_Leave_Request__c.Last_Day_First_Half__c</members>
 		<members>Employee_Leave_Request__c.Leave_Full_Day_Or_Half_Day__c</members>
+		<members>Employee_Leave_Request__c.Leave_Reason__c</members>
 		<members>Employee_Leave_Request__c.Leave_Type__c</members>
+		<members>Employee_Leave_Request__c.Number_Of_Leave_Days__c</members>
 		<members>Employee_Leave_Request__c.To_Date__c</members>
 		<members>Holiday__c.Holiday_Date__c</members>
 		<name>CustomField</name>
@@ -56,6 +60,7 @@
 		<members>constants</members>
 		<members>data</members>
 		<members>dataset</members>
+		<members>hrmsApplyLeaveCmp</members>
 		<members>hrmsHeaderCmp</members>
 		<members>hrmsHomePage</members>
 		<members>hrmsHomePageComponent</members>
