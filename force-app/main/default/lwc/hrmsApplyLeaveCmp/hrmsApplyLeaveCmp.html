@@ -12,16 +12,16 @@
       <div class="slds-modal__content">
         <lightning-layout>
           <lightning-layout-item size="7">
-            <div class="slds-p-around_medium" style="background-color: white;">
+            <div class="slds-p-around_medium" style="background-color: white;height:100%;">
               <div class="slds-grid" style="align-items: baseline;">
                 <div class="slds-col">
-                  <lightning-input type="date" name="fromdate" label="From Date" onchange={handleInputChange}></lightning-input>
+                  <lightning-input required="true" type="date" name="fromdate" label="From Date" data-id="fromdate" onchange={handleInputChange}></lightning-input>
                 </div>
                 <div class="slds-col" style="background-color: #F3F4F7;">
                   <div class="slds-box slds-box_x-small">1 days</div>
                 </div>
                 <div class="slds-col">
-                  <lightning-input type="date" name="todate" label="To Date" onchange={handleInputChange}></lightning-input>
+                  <lightning-input required="true" type="date" name="todate" label="To Date" data-id="todate" onchange={handleInputChange}></lightning-input>
                 </div>
               </div>
               <template if:true={isShowFirstHalfSecondHalf.fullDayFirstHalfSecondHalf}>
@@ -59,11 +59,11 @@
                 </div>
               </template>
               <div class="slds-p-top_medium">
-                <lightning-combobox label="Select available leave types" data-id="leaveTypes" options={leaveTypeOptions}
+                <lightning-combobox required="true" label="Select available leave types" data-id="leaveTypes" options={leaveTypeOptions}
                   value={leaveRequestData.leaveType} placeholder="Select Leave Type" onchange={handleLeaveTypeChange}></lightning-combobox>
               </div>
               <div class="slds-p-top_medium">
-                <lightning-textarea name="leaveNotes" label="Notes"
+                <lightning-textarea required="true" name="leaveNotes" label="Notes" data-id="leaveNotes"
                   placeholder="Please Enter reason For Applying Leave" value={leaveRequestData.leaveReason} onchange={handleInputChange}>
                 </lightning-textarea>
               </div>
@@ -113,7 +113,7 @@
             </div>
           </lightning-layout-item>
           <lightning-layout-item size="5">
-            <div class="slds-p-around_medium" style="background-color: #F8F8F9;">
+            <div class="slds-p-around_medium" style="background-color: #F8F8F9;height:100%;">
               <p style="font-size: 20px;font-weight:300" class="slds-m-bottom_small">Team Leave Calendar</p>
               <div class="slds-box slds-grid slds-box_small" style="background-color: #2986CE;align-items: center;">
                 <div class="slds-col" style="text-align: right;">

@@ -19,7 +19,7 @@ export default class HrmsHomePage extends LightningElement {
   start() {
     var parentThis = this;
     // Run timer code in every 100 milliseconds
-    this.timeIntervalInstance = setInterval(function () {
+    setInterval(function () {
       let currentTime = new Date();
       var hours = currentTime.getHours();
       var minutes = currentTime.getMinutes();

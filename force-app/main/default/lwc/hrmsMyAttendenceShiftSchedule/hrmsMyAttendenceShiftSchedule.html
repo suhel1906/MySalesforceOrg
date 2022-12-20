@@ -1,0 +1,48 @@
+<template>
+    <div class="slds-box slds-box_small slds-m-top_medium" style="background-color: white;">
+      <div style="display:flex;">
+        <div class="slds-border_left slds-border_right slds-border_top slds-border_bottom slds-p-around_xx-small">
+          <lightning-button-icon name="previousMonth" icon-name="utility:chevronleft" alternative-text="left" variant="container" size="large" onclick={handleCalendarChange}></lightning-button-icon>
+        </div>
+        <div style="text-align: center;" class="slds-border_top slds-border_bottom slds-p-around_x-small">
+          <label>{calendarMonthYear.currentMonthName} {calendarMonthYear.currentYear}</label>
+        </div>
+        <div class="slds-border_left slds-border_right slds-border_top slds-border_bottom slds-p-around_xx-small">
+          <lightning-button-icon name="nextMonth" icon-name="utility:chevronright" alternative-text="right" variant="container" size="large" onclick={handleCalendarChange}></lightning-button-icon>
+        </div>
+      </div>
+      <div class="slds-p-top_medium">
+        <table class="slds-table slds-table_bordered slds-table_col-bordered slds-no-row-hover slds-border_left slds-border_right">
+          <tbody>
+            <tr class="slds-line-height_reset" style="background-color: rgb(243, 244, 247);">
+              <th>Sun</th>
+              <th>Mon</th>
+              <th>Tue</th>
+              <th>Wed</th>
+              <th>Thu</th>
+              <th>Fri</th>
+              <th>Sat</th>
+            </tr>
+            <template for:each={currentMonthDate} for:item="item">
+              <tr key={item} class="slds-hint-parent">
+                <template for:each={item.dates} for:item="data">
+                  <td key={data} style={data.textColor}>
+                    <div>{data.day}</div>
+                    <div style="height: 7rem;"></div>
+                    <template if:true={data.isShowAutoShift}>
+                      <div class="slds-truncate slds-wrap" style="color:#777;font-size:12px;">8:00 AM - 7:59 AM (Auto Shift)</div>
+                    </template>
+                    <template if:true={data.isShowWeekOff}>
+                      <div>
+                        <lightning-badge label="W-Off" class="slds-badge_inverse badgeStyle"></lightning-badge>
+                      </div>
+                    </template>
+                  </td>
+                </template>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</template>

@@ -1,0 +1,8 @@
+.badgeStyle {
+  background-color: rgb(194, 184, 157) !important;
+    font-size: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+}

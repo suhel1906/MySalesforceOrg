@@ -26,8 +26,8 @@ export default class HrmsApplyLeaveCmp extends LightningElement {
     let date = new Date();
     this.getCalendarDates(date.getFullYear(), date.getMonth());
     getLeaveTypesAndBalance().then(result => {
-      if(result) {
-        for(let x of result) {
+      if(result.leaveBalanceList) {
+        for(let x of result.leaveBalanceList) {
           this.leaveTypeOptions.push({label: x.Leave__r.Name + ' (' + x.Leave_Available__c + ')', value: x.Leave__r.Name});
         }
         this.template.querySelector('[data-id="leaveTypes"]').options = this.leaveTypeOptions;
@@ -230,15 +230,41 @@ export default class HrmsApplyLeaveCmp extends LightningElement {
     }
   }
   raiseLeaveRequest(event) {
-    console.log("leaveData>>"+JSON.stringify(this.leaveRequestData));
-    let notifiedUsers = [];
-    for(let x of this.selectedUserList) {
-      notifiedUsers.push(x.name);
+    if(this.validate()){
+      let notifiedUsers = [];
+      for(let x of this.selectedUserList) {
+        notifiedUsers.push(x.name);
+      }
+      raiseLeave({leaveRequestData: this.leaveRequestData, notifiedUsersList: notifiedUsers}).then(result => {
+        console.log(result);
+        if(result == "success") {
+          const selectedEvent = new CustomEvent('applyleave', { detail: this.leaveRequestData });
+          this.dispatchEvent(selectedEvent);
+          this.hideModalBox(event);
+        }
+      }).catch(error => {
+        console.log(error);
+      });
     }
-    raiseLeave({leaveRequestData: this.leaveRequestData, notifiedUsersList: notifiedUsers}).then(result => {
-      console.log(result);
-    }).catch(error => {
-      console.log(error);
-    });
+  }
+  validate() {
+    let isValidate = true;
+    if(!this.leaveRequestData.From_Date__c) {
+      this.template.querySelector('[data-id="fromdate"]').reportValidity();
+      isValidate = false;
+    }
+    if(!this.leaveRequestData.To_Date__c) {
+      this.template.querySelector('[data-id="todate"]').reportValidity();
+      isValidate = false;
+    }
+    if(!this.leaveRequestData.Leave_Type__c) {
+      this.template.querySelector('[data-id="leaveTypes"]').reportValidity();
+      isValidate = false;
+    }
+    if(!this.leaveRequestData.Leave_Reason__c) {
+      this.template.querySelector('[data-id="leaveNotes"]').reportValidity();
+      isValidate = false;
+    }
+    return isValidate;
   }
 }

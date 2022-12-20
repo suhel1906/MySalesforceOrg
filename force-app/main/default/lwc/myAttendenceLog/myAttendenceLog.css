@@ -1,0 +1,16 @@
+.badgeStyle {
+  background-color: rgb(194, 184, 157) !important;
+    font-size: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+.pie-percent {
+  height: 16px;
+  width: 16px;
+  min-width: 16px;
+  border: 1px solid;
+  border-color: #64c3d1;
+  border-radius: 50%;
+}

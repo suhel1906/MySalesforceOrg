@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
+		<members>CommunitiesLoginController</members>
 		<members>EmployeeLeaveController</members>
 		<members>HRMSAttendenceController</members>
 		<members>HRMSHomePageController</members>
+		<members>HRMSLoginController</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
+		<members>CommunitiesLogin</members>
+		<members>HRMSLoginPage</members>
 		<members>HRMSPage</members>
 		<name>ApexPage</name>
 	</types>
@@ -66,10 +70,12 @@
 		<members>hrmsHomePageComponent</members>
 		<members>hrmsMeTabCmp</members>
 		<members>hrmsMyAttendenceCmp</members>
+		<members>hrmsMyAttendenceShiftSchedule</members>
 		<members>hrmsMyLeaveCmp</members>
 		<members>layout</members>
 		<members>legend</members>
 		<members>lineConfiguration</members>
+		<members>myAttendenceLog</members>
 		<members>nanoid</members>
 		<members>pointConfiguration</members>
 		<members>radialAxis</members>
@@ -83,6 +89,8 @@
 	</types>
 	<types>
 		<members>ChartJs</members>
+		<members>CompanyImg</members>
+		<members>CompanyLogo</members>
 		<members>ElephantImg</members>
 		<members>OnLeavIcon</members>
 		<members>Resources</members>

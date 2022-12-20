@@ -1,123 +1,123 @@
 <template>
-  <div style="background-color: rgb(243, 244, 247)">
-    <p style="font-size: 18px;line-height: 28px;font-weight: 400;font-family: Segoe UI;">Logs &amp; Requests</p>
-    <div style="background-color: white;" class="slds-box slds-box_x-small slds-m-top_medium">
-      <lightning-button variant="brand" label="Attendence Log" title="Attendence Log" onclick={handleClick}></lightning-button>
-      <lightning-button variant="neutral" label="Shift Schedule" title="Shift Schedule" onclick={handleClick}></lightning-button>
-      <lightning-button variant="neutral" label="Attendence Request" title="Attendence Request" onclick={handleClick}></lightning-button>
-    </div>
-    <lightning-layout class="slds-box slds-box_x-small slds-m-top_medium" style="background-color: white;">
-      <lightning-layout-item size="2">
-        <p style="font-size: 16px;line-height: 28px;font-weight: 400;font-family: Segoe UI;">Last 30 Days</p>
-      </lightning-layout-item>
-      <lightning-layout-item size="10" style="text-align: right;">
-        <lightning-button-group>
-          <lightning-button label="30 days" variant="brand"></lightning-button>
-          <lightning-button label="Oct"></lightning-button>
-          <lightning-button label="Sep"></lightning-button>
-          <lightning-button label="Aug"></lightning-button>
-          <lightning-button label="Jul"></lightning-button>
-          <lightning-button label="Jun"></lightning-button>
-          <lightning-button label="May"></lightning-button>
-        </lightning-button-group>
-      </lightning-layout-item>
-    </lightning-layout>
-
+  <div>
     <lightning-layout>
-      <lightning-layout-item size="12">
-        <table class="slds-table slds-table_bordered slds-border_left slds-border_right" aria-labelledby="element-with-table-label other-element-with-table-label">
-          <tbody>
-            <tr class="slds-line-height_reset" style="background-color: rgb(243, 244, 247);">
-              <th class="" scope="col">
-                <div class="slds-truncate" title="DATE">DATE</div>
-              </th>
-              <th class="" scope="col">
-                <div class="slds-truncate" title="ATTENDANCE VISUAL">ATTENDANCE VISUAL</div>
-              </th>
-              <th class="" scope="col">
-                <div class="slds-truncate" title="EFFECTIVE HOURS">EFFECTIVE HOURS</div>
-              </th>
-              <th class="" scope="col">
-                <div class="slds-truncate" title="GROSS HOURS">GROSS HOURS</div>
-              </th>
-              <th class="" scope="col">
-                <div class="slds-truncate" title="Arrival">Arrival</div>
-              </th>
-              <th class="" scope="col">
-                <div class="slds-truncate" title="LOG">LOG</div>
-              </th>
-            </tr>
-            <template for:each={attendenceData} for:item="data" for:index="indx">
-              <template if:true={data.isWeekOff}>
-                <tr key={data} style="background-color: hsla(44,23%,69%,.2)!important;font-size: 12px;">
-                  <td>
-                    <div class="slds-truncate slds-box slds-box_x-small" style="border: none;">
-                      <span>{data.dateFormat}</span>
-                      <lightning-badge label="W-Off" class="slds-badge_inverse badgeStyle slds-m-left_x-small"></lightning-badge>
-                    </div>
-                  </td>
-                  <td colspan="2" style="text-align: center;">Full day Weekly-off</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </template>
-              <template if:true={data.isHoliday}>
-                <tr key={data} style="background-color: rgba(152,180,51,.2);font-size: 12px;">
-                  <td>
-                    <div class="slds-truncate slds-box slds-box_x-small" style="border: none;">
-                      <span>{data.dateFormat}</span>
-                      <lightning-badge label="HLDY" class="slds-badge_inverse badgeStyle slds-m-left_x-small" style="background-color: #98b433!important;"></lightning-badge>
-                    </div>
-                  </td>
-                  <td colspan="2" style="text-align: center;">Holiday</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </template>
-              <template if:true={data.isNoTimeEntriesLogged}>
-                <tr key={data} style="font-size: 12px;">
-                  <td>
-                    <div class="slds-truncate slds-box slds-box_x-small" style="border: none;">
-                      <span>{data.dateFormat}</span>
-                    </div>
-                  </td>
-                  <td colspan="2" style="text-align: center;">No Time Entries Logged</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </template>
-              <template if:true={data.isTimeEntriesLogged}>
-                <tr class="slds-hint-parent" key={data} style="font-size: 13px;">
-                  <td data-label="Nov 22, 2022">
-                    <div class="slds-truncate slds-box slds-box_x-small" style="border: none;">{data.dateFormat}</div>
-                  </td>
-                  <td data-label="Nov 22, 2022">
-                    <div class="slds-truncate">No visual</div>
-                  </td>
-                  <td data-label="Nov 22, 2022">
-                    <div class="slds-truncate" style="display: flex;">
-                      <div class="pie-percent" style={data.hoursPercent}></div>
-                      <div class="slds-m-left_small">{data.effectiveHours}</div>
-                    </div>
-                  </td>
-                  <td data-label="Nov 22, 2022">
-                    <div class="slds-truncate">{data.grossHours}</div>
-                  </td>
-                  <td data-label="Nov 22, 2022">
-                    <div class="slds-truncate">On Time</div>
-                  </td>
-                  <td data-label="Nov 22, 2022">
-                    <div class="slds-truncate"></div>
-                  </td>
-                </tr>
-              </template>
-            </template>
-          </tbody>
-        </table>
+      <lightning-layout-item size="4" class="slds-p-right_medium">
+        <p style="font-size: 18px;line-height: 28px;font-weight: 400;font-family: Segoe UI;">Attendance Stats</p>
+        <div class="slds-box slds-m-top_medium" style="background-color: white;">
+          <div class="slds-grid">
+            <div class="slds-col">
+              <span>Last Week</span>
+              <lightning-button-menu alternative-text="Show menu" variant="bare" icon-name="utility:chevrondown">
+                <lightning-menu-item value="lastWeek" label="Last Week"></lightning-menu-item>
+                <lightning-menu-item value="lastMonth" label="Last Month"></lightning-menu-item>
+                <lightning-menu-item value="customRange" label="Custom Range"></lightning-menu-item>
+              </lightning-button-menu>
+            </div>
+          </div>
+          <div class="slds-grid slds-p-bottom_large" style="align-items: end;">
+            <div class="slds-col slds-size_1-of-3">
+              <span><lightning-icon icon-name="action:user" alternative-text="Me"
+                  size="x-small"></lightning-icon></span>
+              <span style="font-size: 14px;padding-left:10px;">Me</span>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+              <p style="font-size: 10px;color: #777">AVG HRS / DAY</p>
+              <p style="font-size: 20px;">9h 6m</p>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+              <p style="font-size: 10px;color: #777">ON TIME ARRIVAL</p>
+              <p style="font-size: 20px;">0%</p>
+            </div>
+          </div>
+          <div class="slds-grid slds-p-top_large slds-border_top">
+            <div class="slds-col slds-size_1-of-3">
+              <span><lightning-icon icon-name="action:new_group" alternative-text="Me"
+                  size="x-small"></lightning-icon></span>
+              <span style="font-size: 14px;padding-left:10px;">My Team</span>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+              <p style="font-size: 20px;">9h 6m</p>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+              <p style="font-size: 20px;">10%</p>
+            </div>
+          </div>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="4" class="slds-p-right_medium">
+        <p style="font-size: 18px;line-height: 28px;font-weight: 400;font-family: Segoe UI;">Timings</p>
+        <div class="slds-box slds-m-top_medium" style="background-color: white;height:80%;">
+          <div class="slds-grid">
+            <div class="slds-col" style="display: flex;">
+              <div class="circlediv">M</div>
+              <div class="circlediv">T</div>
+              <div class="circlediv">W</div>
+              <div class="circlediv">T</div>
+              <div class="circlediv">F</div>
+              <div class="circlediv">S</div>
+              <div class="circlediv">S</div>
+            </div>
+            <div class="slds-col" style="text-align: right;">
+              <span><lightning-icon icon-name="utility:zoomin" alternative-text="View tracking policy"
+                  title="View tracking policy" size="x-small"></lightning-icon></span>
+              <span class="slds-m-left_x-small"><lightning-icon icon-name="utility:aggregation_policy"
+                  alternative-text="View capture scheme" title="View capture scheme"
+                  size="x-small"></lightning-icon></span>
+            </div>
+          </div>
+          <div class="slds-p-top_xx-large slds-m-top_small">
+            <div class="slds-grid" style="align-items: center;">
+              <div class="slds-col">
+                <p style="font-size: 12px;font-family:Segoe UI">Today (8:00 AM - 7:59 AM) (Auto Shift)</p>
+              </div>
+              <div class="slds-col" style="text-align: right;">
+                <lightning-button variant="base" label="View All Shifts" name="allShifts"></lightning-button>
+              </div>
+            </div>
+            <lightning-progress-bar value="100" size="large" variant="circular"></lightning-progress-bar>
+            <div class="slds-grid">
+              <div class="slds-col">
+                <p style="font-size: 10px; color: #777">Duration: 23h 59m</p>
+              </div>
+              <div class="slds-col" style="text-align: right;">
+                <p style="font-size: 10px; color: #777">Break: 0 Min</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </lightning-layout-item>
+      <lightning-layout-item size="4">
+        <p style="font-size: 18px;line-height: 28px;font-weight: 400;font-family: Segoe UI;">Actions</p>
+        <div class="slds-box slds-m-top_medium" style="background-color: white;height:80%;">
+          <div class="slds-grid">
+            <div class="slds-col slds-size_1-of-3">
+              <p class="slds-box slds-box_xx-small" style="font-size: 18px;line-height: 28px;font-weight: 400;text-align:center;width:80%;font-family:Seoge UI">{timeVal}{seconds}</p>
+              <lightning-formatted-date-time value={todayDate} month="short" year="numeric" day="2-digit" weekday="short" style="font-family:Seoge UI"></lightning-formatted-date-time>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+              <div><a href="javascript:void(0)">Web Clock In</a></div>
+              <div class="slds-p-top_xx-small"><a href="javascript:void(0)">Work From Home</a></div>
+              <div class="slds-p-top_xx-small"><a href="javascript:void(0)">Remote Clock In</a></div>
+            </div>
+          </div>
+        </div>
       </lightning-layout-item>
     </lightning-layout>
+    <p style="font-size: 18px;line-height: 28px;font-weight: 400;font-family: Segoe UI;" class="slds-m-top_medium">Logs
+      &amp; Requests</p>
+    <div style="background-color: white;" class="slds-box slds-box_x-small slds-m-top_medium">
+      <lightning-button data-value="logAndrequest" variant="brand" label="Attendence Log" title="Attendence Log"
+        onclick={handleClick}></lightning-button>
+      <lightning-button data-value="logAndrequest" variant="neutral" label="Shift Schedule" title="Shift Schedule"
+        onclick={handleClick}></lightning-button>
+      <lightning-button data-value="logAndrequest" variant="neutral" label="Attendence Request" title="Attendence Request"
+        onclick={handleClick}></lightning-button>
+    </div>
+    <template if:true={booleanVariables.isShowAttendenceLog}>
+      <c-my-attendence-log></c-my-attendence-log>
+    </template>
+    <template if:true={booleanVariables.isShowShiftSchedule}>
+      <c-hrms-my-attendence-shift-schedule></c-hrms-my-attendence-shift-schedule>
+    </template>
   </div>
 </template>

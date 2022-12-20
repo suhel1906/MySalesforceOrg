@@ -1,0 +1,133 @@
+<template>
+  <template if:true={isShowSpinner}>
+    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+  </template>
+  <lightning-layout class="slds-box slds-box_x-small slds-m-top_medium" style="background-color: white;">
+    <lightning-layout-item size="2">
+      <p style="font-size: 16px;line-height: 28px;font-weight: 400;font-family: Segoe UI;">Last 30 Days</p>
+    </lightning-layout-item>
+    <lightning-layout-item size="10" style="text-align: right;">
+      <lightning-button-group>
+        <lightning-button data-name="monthsbtn" label="30 days" variant="brand" onclick={handleClick}></lightning-button>
+        <template for:each={attendenceMonths} for:item="item">
+          <lightning-button data-name="monthsbtn" key={item.monthLabel} label={item.monthLabel} data-value={item.monthAndYear} onclick={handleClick}></lightning-button>
+        </template>
+      </lightning-button-group>
+    </lightning-layout-item>
+  </lightning-layout>
+
+  <lightning-layout>
+    <lightning-layout-item size="12">
+      <table class="slds-table slds-table_bordered slds-border_left slds-border_right"
+        aria-labelledby="element-with-table-label other-element-with-table-label">
+        <tbody>
+          <tr class="slds-line-height_reset" style="background-color: rgb(243, 244, 247);">
+            <th class="" scope="col">
+              <div class="slds-truncate" title="DATE">DATE</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="ATTENDANCE VISUAL">ATTENDANCE VISUAL</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="EFFECTIVE HOURS">EFFECTIVE HOURS</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="GROSS HOURS">GROSS HOURS</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="Arrival">Arrival</div>
+            </th>
+            <th class="" scope="col">
+              <div class="slds-truncate" title="LOG">LOG</div>
+            </th>
+          </tr>
+          <template for:each={attendenceData} for:item="data" for:index="indx">
+            <template if:true={data.isWeekOff}>
+              <tr key={data} style="background-color: hsla(44,23%,69%,.2)!important;font-size: 12px;">
+                <td>
+                  <div class="slds-truncate slds-box slds-box_x-small" style="border: none;">
+                    <span>{data.dateFormat}</span>
+                    <lightning-badge label="W-Off"
+                      class="slds-badge_inverse badgeStyle slds-m-left_x-small"></lightning-badge>
+                  </div>
+                </td>
+                <td colspan="2" style="text-align: center;">Full day Weekly-off</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </template>
+            <template if:true={data.isHoliday}>
+              <tr key={data} style="background-color: rgba(152,180,51,.2);font-size: 12px;">
+                <td>
+                  <div class="slds-truncate slds-box slds-box_x-small" style="border: none;">
+                    <span>{data.dateFormat}</span>
+                    <lightning-badge label="HLDY" class="slds-badge_inverse badgeStyle slds-m-left_x-small"
+                      style="background-color: #98b433!important;"></lightning-badge>
+                  </div>
+                </td>
+                <td colspan="2" style="text-align: center;">Holiday</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </template>
+            <template if:true={data.isOnLeave}>
+              <tr key={data} style="background-color: rgb(234,231,243);font-size: 12px;">
+                <td>
+                  <div class="slds-truncate slds-box slds-box_x-small" style="border: none;">
+                    <span>{data.dateFormat}</span>
+                    <lightning-badge label="LEAVE" class="slds-badge_inverse badgeStyle slds-m-left_x-small"
+                      style="background-color: rgb(151,133,194)!important;"></lightning-badge>
+                  </div>
+                </td>
+                <td colspan="2" style="text-align: center;">{data.leaveType}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </template>
+            <template if:true={data.isNoTimeEntriesLogged}>
+              <tr key={data} style="font-size: 12px;">
+                <td>
+                  <div class="slds-truncate slds-box slds-box_x-small" style="border: none;">
+                    <span>{data.dateFormat}</span>
+                  </div>
+                </td>
+                <td colspan="2" style="text-align: center;">No Time Entries Logged</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </template>
+            <template if:true={data.isTimeEntriesLogged}>
+              <tr class="slds-hint-parent" key={data.dateFormat} style="font-size: 13px;">
+                <td>
+                  <div class="slds-truncate slds-box slds-box_x-small" style="border: none;">{data.dateFormat}</div>
+                </td>
+                <td>
+                  <div class="slds-truncate">No visual</div>
+                </td>
+                <td>
+                  <div class="slds-truncate" style="display: flex;">
+                    <div class="pie-percent" style={data.hoursPercent}></div>
+                    <div class="slds-m-left_small">{data.effectiveHours}</div>
+                  </div>
+                </td>
+                <td>
+                  <div class="slds-truncate">{data.grossHours}</div>
+                </td>
+                <td>
+                  <div class="slds-truncate">On Time</div>
+                </td>
+                <td>
+                  <div class="slds-truncate"></div>
+                </td>
+              </tr>
+            </template>
+          </template>
+        </tbody>
+      </table>
+    </lightning-layout-item>
+  </lightning-layout>
+</template>

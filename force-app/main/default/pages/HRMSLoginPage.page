@@ -1,0 +1,79 @@
+<apex:page showHeader="false" sidebar="false" controller="HRMSLoginController" standardStylesheets="true">
+    <script type="text/javascript">
+    function callActionFunction() {
+        var username = document.getElementById("text-input-id-50").value;
+        var password = document.getElementById("text-input-id-47").value;
+        apexfunction(username, password);
+    }
+    </script>
+    <style>
+        .custom1 {
+        background-color: white !important;
+        }
+    </style>
+    <apex:Pagemessages id="msg"/>
+    <apex:slds />
+    <div class="slds-grid">
+        <div class="slds-size_8-of-12">
+            <apex:image url="{!$Resource.CompanyImg}"/>
+        </div>
+        <div class="slds-size_4-of-12">
+            <apex:pageBlock id="loginpage" >
+                <apex:outputPanel styleClass="custom1" layout="block">
+                    <apex:pageBlockSection columns="1">
+                        <apex:form rendered="{!if(showUserNameAndPassPage == false, true, false)}">
+                            <div class="slds-p-around_x-large" style="padding-top:100px;">
+                                <apex:image url="{!$Resource.CompanyLogo}" height="200" width="200"/>
+                                <h4 style="font-weight: 500; font-size:18px;">Login</h4>
+                                <p class="slds-p-top_x-small" style="color: #888; font-size:14px;">
+                                    Your organization uses following login modes to access HRMS
+                                </p>
+                                <div class="slds-p-top_medium">
+                                    <a class="slds-button slds-button_destructive slds-p-around_x-small" href="#" style="font-size:14px;font-weight:500;width:50%;">Login With Office 365</a>
+                                </div>
+                                <div class="slds-p-top_medium">
+                                    <a class="slds-button slds-button_brand slds-p-around_x-small" style="font-size:14px;font-weight:500;width:50%;" href="#">Login With Google</a>
+                                </div>
+                                <div class="slds-p-top_medium">
+                                    <a class="slds-button slds-button_success slds-p-around_x-small" href="#" style="font-size:14px;font-weight:500;width:50%;" onclick="apexAction()">Login With HRMS Password</a>
+                                </div>
+                                <apex:actionFunction name="apexAction" action="{!showUserAndPassWordPage}" reRender="loginpage"  >
+                                </apex:actionFunction>
+                            </div>
+                        </apex:form>
+                        <apex:form rendered="{!if(showUserNameAndPassPage == true, true, false)}">
+                            <div class="slds-p-around_x-large" style="padding-top:100px;">
+                                <apex:image url="{!$Resource.CompanyLogo}" height="200" width="200"/>
+                                <h4 style="font-weight: 500; font-size:18px;">Login</h4>
+                                <p class="slds-p-top_x-small" style="color: #888; font-size:14px;">
+                                    Please enter your username or work email address
+                                </p>
+                                <div class="slds-form-element slds-p-top_medium">
+                                    <label class="slds-form-element__label" for="text-input-id-50" style="color:#888;font-size:1rem;">
+                                        <abbr class="slds-required" title="required">* </abbr>Username</label>
+                                    <div class="slds-form-element__control">
+                                        <input type="email" id="text-input-id-50" required="" class="slds-input slds-p-around_x-small" style="font-size:15px;" value="{!username}"/>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element slds-p-top_medium">
+                                    <label class="slds-form-element__label" for="text-input-id-47" style="color:#888;font-size:1rem;">
+                                        <abbr class="slds-required" title="required">* </abbr>Password</label>
+                                    <div class="slds-form-element__control">
+                                        <input type="password" id="text-input-id-47" required="" class="slds-input slds-p-around_x-small" style="font-size:15px;" value="{!password}"/>
+                                    </div>
+                                </div>
+                                <div class="slds-p-top_medium">
+                                    <button class="slds-button slds-button_brand slds-p-around_x-small" style="font-size:16px;font-weight:500;width:30%;" onclick="callActionFunction()">Login</button>
+                                </div>
+                                <apex:actionFunction name="apexfunction" action="{!loginUser}">
+                                    <apex:param id="username" name="username" assignTo="{!username}" value=""/>
+                                    <apex:param id="password" name="password" assignTo="{!password}" value=""/>
+                                </apex:actionFunction>
+                            </div>
+                        </apex:form>
+                    </apex:pageBlockSection>
+                </apex:outputPanel>
+            </apex:pageBlock>
+        </div>
+    </div>
+</apex:page>

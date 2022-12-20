@@ -1,8 +1,11 @@
 <template>
-  <template if:true={isShowApplyleave}>
-    <c-hrms-apply-leave-cmp onmodalclose={closeApplyLeaveModal}></c-hrms-apply-leave-cmp>
+  <template if:true={booleanvariables.isShowSpinner}>
+    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
   </template>
-  <div style="background-color: rgb(243, 244, 247)">
+  <template if:true={booleanvariables.isShowApplyleave}>
+    <c-hrms-apply-leave-cmp onmodalclose={closeApplyLeaveModal} onapplyleave={handelAppliedLeave}></c-hrms-apply-leave-cmp>
+  </template>
+  <div>
     <lightning-layout class="slds-p-around_small">
       <lightning-layout-item size="2">
         <p style="
@@ -22,30 +25,91 @@
     </lightning-layout>
     <lightning-layout class="slds-p-around_small">
       <!--Show Pending leaves-->
-      <lightning-layout-item size="9">
-        <div class="slds-box" style="background-color: white">
-          <lightning-layout class="slds-p-top_small">
-            <lightning-layout-item size="1">
-              <div>
-                <img src={elephantUrl} />
-              </div>
-            </lightning-layout-item>
-            <lightning-layout-item size="11">
-              <div class="slds-p-around_small">
-                <p style="font-size: 14px; font-family: Segoe UI">
-                  Nothing Here
-                </p>
-                <p style="
+      <lightning-layout-item size="9" style="background-color: white;">
+        <template if:true={booleanvariables.isShowPendingRequest}>
+          <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left">
+            <thead>
+              <tr class="slds-line-height_reset">
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="LEAVE DATE">LEAVE DATE</div>
+                </th>
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="LEAVE TYPE">LEAVE TYPE</div>
+                </th>
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="STATUS">STATUS</div>
+                </th>
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="REQUESTED BY">REQUESTED BY</div>
+                </th>
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="ACTION TAKEN ON">ACTION TAKEN ON</div>
+                </th>
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="LEAVE NOTE">LEAVE NOTE</div>
+                </th>
+                <th class="" scope="col">
+                  <div class="slds-truncate" title="ACTIONS">ACTIONS</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <template for:each={leaveData.pendingLeaveRequestList} for:item="data">
+                <tr key={data.Id}>
+                  <td class="">
+                    <div class="slds-truncate" title="ACTIONS">{data.From_Date__c}</div>
+                  </td>
+                  <td class="">
+                    <div class="slds-truncate" title="ACTIONS">{data.Leave_Type__c}</div>
+                  </td>
+                  <td class="">
+                    <div class="slds-truncate" title="ACTIONS">{data.Leave_Status__c}</div>
+                  </td>
+                  <td class="">
+                    <div class="slds-truncate" title="ACTIONS">{data.CreatedBy.Name}</div>
+                  </td>
+                  <td class="">
+                    <div class="slds-truncate" title="ACTIONS"></div>
+                  </td>
+                  <td class="">
+                    <div class="slds-truncate" title="ACTIONS">{data.Leave_Reason__c}</div>
+                  </td>
+                  <td class="">
+                    <div class="slds-truncate" title="ACTIONS">
+                      <lightning-button-icon icon-name="utility:threedots" alternative-text="Actions" title="Actions">
+                      </lightning-button-icon>
+                    </div>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </template>
+        <template if:false={booleanvariables.isShowPendingRequest}>
+          <div class="slds-box" style="background-color: white">
+            <lightning-layout class="slds-p-top_small">
+              <lightning-layout-item size="1">
+                <div>
+                  <img src={elephantUrl} />
+                </div>
+              </lightning-layout-item>
+              <lightning-layout-item size="11">
+                <div class="slds-p-around_small">
+                  <p style="font-size: 14px; font-family: Segoe UI">
+                    Nothing Here
+                  </p>
+                  <p style="
                     font-size: 13px;
                     font-family: Segoe UI;
                     color: #777;
                   ">
-                  Working hard yeah?? Request time off on the right ->
-                </p>
-              </div>
-            </lightning-layout-item>
-          </lightning-layout>
-        </div>
+                    Working hard yeah?? Request time off on the right ->
+                  </p>
+                </div>
+              </lightning-layout-item>
+            </lightning-layout>
+          </div>
+        </template>
       </lightning-layout-item>
       <!--Apply Leaves-->
       <lightning-layout-item size="3" class="slds-p-left_small slds-p-right_small">
@@ -83,24 +147,10 @@
     </div>
     <lightning-layout>
       <lightning-layout-item size="3" class="slds-p-around_small">
-        <div class="slds-box" style="background-color: white;">
+        <div class="slds-box" style="background-color: white;height: 100%;">
           <c-chart type="bar" responsive="true" stylecss="position: relative; margin: auto;" events='["click"]'>
-            <c-dataset labels='["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]'>
-              <c-data detail="[12, 19, 7, 9, 5, 15]" backgroundcolor='[
-            "rgba(82, 183, 216, 0.2)",
-            "rgba(225, 96, 50, 0.2)",
-            "rgba(255, 176, 59, 0.2)",
-            "rgba(84, 167, 123, 0.2)",
-            "rgba(79, 210, 210, 0.2)",
-            "rgba(226, 135, 178, 0.2)"
-            ]' bordercolor='[
-            "rgba(82, 183, 216, 1)",
-            "rgba(225, 96, 50, 1)",
-            "rgba(255, 176, 59, 1)",
-            "rgba(84, 167, 123, 1)",
-            "rgba(79, 210, 210, 1)",
-            "rgba(226, 135, 178, 1)"
-            ]' borderwidth="1"></c-data>
+            <c-dataset labels='["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]'>
+              <c-data detail={leaveData.weeklyLeaves} backgroundcolor="rgb(151,133,194)" bordercolor="rgb(151,133,194)" borderwidth="1"></c-data>
             </c-dataset>
             <c-title text="Weekly Pattern"></c-title>
             <!-- <c-title text="Bar Chart"></c-title>
@@ -112,54 +162,22 @@
         </div>
       </lightning-layout-item>
       <lightning-layout-item size="3" class="slds-p-around_small">
-        <div class="slds-box" style="background-color: white;">
+        <div class="slds-box" style="background-color: white;height: 100%;">
           <c-chart type="doughnut" responsive="true">
-            <c-dataset labels='["OK", "WARNING", "CRITICAL", "UNKNOWN"]'>
-              <c-data label="# of Tomatoes" detail="[12, 19, 3, 5]" backgroundcolor='[
-            "rgba(14, 110, 206, 1)",
-            "rgba(45, 156, 237, 1)",
-            "rgba(104, 206, 238, 1)",
-            "rgba(150, 242, 238, 1)"
-            ]'></c-data>
+            <c-dataset labels={leaveData.consumedLeaveTypeName}>
+              <c-data label="Number of leaves" detail={leaveData.consumedLeaves} backgroundcolor='["rgb(152,180,51)","rgb(203,124,192)","rgb(241,197,51)","rgba(150, 242, 238, 1)"]' bordercolor='["rgb(152,180,51)","rgb(203,124,192)","rgb(241,197,51)","rgba(150, 242, 238, 1)"]'></c-data>
             </c-dataset>
             <c-title text="Consumed Leave Types"></c-title>
             <!-- c-legend position="left"></c-legend> -->
-            <c-arc-configuration bordercolor="rgba(7, 62, 146, 0.7)"></c-arc-configuration>
           </c-chart>
         </div>
       </lightning-layout-item>
       <lightning-layout-item size="6" class="slds-p-around_small">
-        <div class="slds-box" style="background-color: white;">
+        <div class="slds-box" style="background-color: white;height: 100%;">
           <c-chart type="bar" responsive="true" maintainaspectratio="false" stylecss="position: relative; margin: auto;"
             events='["click"]'>
             <c-dataset labels='["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]'>
-              <c-data detail="[12, 19, 7, 9, 5, 15, 2, 3, 5, 7, 8, 10]" backgroundcolor='[
-            "rgba(82, 183, 216, 0.2)",
-            "rgba(225, 96, 50, 0.2)",
-            "rgba(255, 176, 59, 0.2)",
-            "rgba(84, 167, 123, 0.2)",
-            "rgba(79, 210, 210, 0.2)",
-            "rgba(226, 135, 178, 0.2)",
-            "rgba(226, 135, 178, 0.2)",
-            "rgba(79, 210, 210, 0.2)",
-            "rgba(255, 176, 59, 0.2)",
-            "rgba(225, 96, 50, 0.2)",
-            "rgba(82, 183, 216, 0.2)",
-            "rgba(226, 135, 178, 0.2)"
-            ]' bordercolor='[
-            "rgba(82, 183, 216, 0.2)",
-            "rgba(225, 96, 50, 0.2)",
-            "rgba(255, 176, 59, 0.2)",
-            "rgba(84, 167, 123, 0.2)",
-            "rgba(79, 210, 210, 0.2)",
-            "rgba(226, 135, 178, 0.2)",
-            "rgba(226, 135, 178, 0.2)",
-            "rgba(79, 210, 210, 0.2)",
-            "rgba(255, 176, 59, 0.2)",
-            "rgba(225, 96, 50, 0.2)",
-            "rgba(82, 183, 216, 0.2)",
-            "rgba(226, 135, 178, 0.2)"
-            ]' borderwidth="1"></c-data>
+              <c-data detail={leaveData.monthlyLeaves} backgroundcolor="rgb(151,133,194)" bordercolor="rgb(151,133,194)" borderwidth="1"></c-data>
             </c-dataset>
             <c-title text="Monthly Stats"></c-title>
             <!--c-legend position="right"></c-legend-->
@@ -240,9 +258,10 @@
       </p>
     </div>
     <div class="slds-p-around_small">
-      <table class="slds-table slds-table_bordered slds-border_left slds-border_right" aria-labelledby="element-with-table-label other-element-with-table-label">
-        <tbody>
-          <tr class="slds-line-height_reset" style="background-color: rgb(243, 244, 247);">
+      <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-border_right slds-border_left"
+        aria-labelledby="element-with-table-label other-element-with-table-label">
+        <thead>
+          <tr class="slds-line-height_reset">
             <th class="" scope="col">
               <div class="slds-truncate" title="LEAVE DATE">LEAVE DATE</div>
             </th>
@@ -265,6 +284,45 @@
               <div class="slds-truncate" title="ACTIONS">ACTIONS</div>
             </th>
           </tr>
+        </thead>
+        <tbody>
+          <template for:each={leaveData.leaveHistory} for:item="data">
+            <tr key={data.Id}>
+              <td class="">
+                <div class="slds-truncate" title="ACTIONS">
+                  <lightning-formatted-date-time value={data.From_Date__c}></lightning-formatted-date-time>
+                  &nbsp; - &nbsp;
+                  <lightning-formatted-date-time value={data.To_Date__c}></lightning-formatted-date-time>
+                </div>
+                <div style="color: #777;font-size: 12px;">{data.Number_Of_Leave_Days__c} Day</div>
+              </td>
+              <td class="">
+                <div class="slds-truncate" title="ACTIONS">{data.Leave_Type__c}</div>
+                <div style="color: #777;font-size: 12px;">Requested on&nbsp;
+                  <lightning-formatted-date-time value={data.CreatedDate}></lightning-formatted-date-time>
+                </div>
+              </td>
+              <td class="">
+                <div class="slds-truncate" title="ACTIONS">{data.Leave_Status__c}</div>
+                <div style="color: #777;font-size: 12px;">Approved by</div>
+              </td>
+              <td class="">
+                <div class="slds-truncate" title="ACTIONS">{data.CreatedBy.Name}</div>
+              </td>
+              <td class="">
+                <div class="slds-truncate" title="ACTIONS">Action Taken on</div>
+              </td>
+              <td class="">
+                <div class="slds-truncate" title="ACTIONS">{data.Leave_Reason__c}</div>
+              </td>
+              <td class="">
+                <div class="slds-truncate" title="ACTIONS">
+                  <lightning-button-icon icon-name="utility:threedots" alternative-text="Actions" title="Actions">
+                  </lightning-button-icon>
+                </div>
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
